@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
+import requests
 
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
@@ -91,9 +92,18 @@ def get_cars(request):
     return JsonResponse({"CarModels":cars})
 
 # # Update the `get_dealerships` view to render the index page with
-# a list of dealerships
-# def get_dealerships(request):
-# ...
+def get_dealers(request):
+    url = 'https://kalombograce-3030.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/fetchDealers'
+    
+    try:
+        # Send GET request to Node.js API to fetch dealerships
+        response = requests.get(url)
+        dealerships = response.json()  # Assuming the API returns JSON data
+        return dealerships
+    except requests.exceptions.RequestException as e:
+        # Handle the error if the request fails
+        dealerships = []
+        print(f"Error fetching data: {e}")
 
 # Create a `get_dealer_reviews` view to render the reviews of a dealer
 # def get_dealer_reviews(request,dealer_id):
