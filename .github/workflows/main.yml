@@ -26,6 +26,5 @@ jobs:
 
       - name: Lint code
         run: |
-          npx eslint . || true 
-
-
+          npx eslint . # Run eslint without || true to let the process exit with error codes
+        continue-on-error: true  # This ensures the lint job is marked as successful even with linting errors
